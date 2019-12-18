@@ -5,15 +5,16 @@
     <title></title>
   </head>
   <body>
-
+<form action="process.php" method="post">
     <div id="app">
       <p>Texto:</p>
       <p v-html="message"></p>
-      <p>JSON:</p>
       <p v-html="op"></p>
+      <input type="hidden" name="json" :value="op">
       <input v-model="input" v-on:keyup="letters">
     </div>
-
+    <button type="submit" name="button">calcular</button>
+</form>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script type="text/javascript">
@@ -23,7 +24,7 @@
         data: {
           message: '',
           input:"",
-          op:''
+          op:[]
         },
         methods:{
           letters: function(){
@@ -78,17 +79,18 @@ function calcText(input){
     }
     else if(input[i] == ' '){
       input[i] = '';
-    }
-    else if(input[i] == '='){
-      input[i] = ' <span style="color:gold;">=</span> ';
-      jsonop = jsonop+'"el'+i+'":{"num":'+number+'},';
-      prevop = 1;
     }else{
       if(prevop == 1){
         var number = input[i];
         var numel = i;
+        var constantJson = jsonop;
+        jsonop = constantJson+'"el'+numel+'":{"num":'+number+'},';
       }else{
         number = number+input[i];
+        if(constantJson == ''){
+          var constantJson = jsonop;
+        }
+        jsonop = constantJson+'"el'+numel+'":{"num":'+number+'},';
       }
       prevop = 0;
     }
@@ -96,7 +98,6 @@ function calcText(input){
 
   jsonop = jsonop.substring(0, jsonop.length - 1);
   jsonop = jsonop+'}';
-  console.log(JSON.parse(jsonop));
   app.op = jsonop;
   input = input.join('');
   return input;
@@ -104,7 +105,7 @@ function calcText(input){
 
 function printNum(prevop,number,jsonop,numel){
   if(prevop == 0){
-    jsonop = jsonop+'"el'+numel+'":{"num":'+number+'},';
+
   }
   return jsonop;
 }

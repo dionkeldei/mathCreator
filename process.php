@@ -5,11 +5,14 @@ class dMath{
       $ops = json_decode($json,true);
       foreach($ops as $op => $field){
         foreach($ops[$op] as $key => $value){
+
           if($key == 'group'){
             $res = dMath::findGroup($value);
             $ops[$op] = array(
               "num"=>$res
             );
+            $json = json_encode($ops);
+            dMath::calc($json);
           }
         }
       }
@@ -20,14 +23,17 @@ class dMath{
     public static function findGroup($array){
       $groups = 0;
       foreach($array as $key=>$value){
-        if($key == 'group'){
-          $groups = 1;
+        foreach($array[$key] as $elm1 => $field1){
+          if($elm1 == 'group'){
+            $res = dMath::operations($field1);
+            $array[$key] = array(
+              "num"=>$res
+            );
+          }
         }
+
       }
 
-      if($groups == 1){
-         dMath::findGroup();
-      }
       $res = dMath::operations($array);
 
       return $res;
@@ -78,5 +84,7 @@ class dMath{
 }
 
 $json = $_POST['json'];
-$json ='{"el0":{"group":{"el1":{"num":56},"el3":{"op":"add"},"el4":{"num":78}}},"el7":{"op":"div"},"el10":{"num":50}}';
 echo "el resultado es : ".dMath::calc($json);
+?>
+
+<a href="index.php"><button type="button" name="button">volvera calcular</button></a>
