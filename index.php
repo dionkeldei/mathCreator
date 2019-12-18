@@ -23,33 +23,85 @@
         data: {
           message: '',
           input:"",
-          op:{"num0":{"num":5},"num1":{"op":"add"},"num2":{"num":3}}
+          op:{}
         },
         methods:{
           letters: function(){
             var input = this.input;
-            var length = input.length;
-            input = input.split("");
-            for(i=0;i<length;i++){
-              if(input[i] == '*'){
-                input[i] = '<span style="color:red;">x</span>';
-              }
-              if(input[i] == '/'){
-                input[i] = '<span style="color:red;">/</span>';
-              }
-              if(input[i] == '-'){
-                input[i] = '<span style="color:blue;">-</span>';
-              }
-              if(input[i] == '+'){
-                input[i] = '<span style="color:blue;">+</span>';
-              }
-            }
-            input = input.join('');
-            this.op = this.op.num0;
-             this.message = input;
+             this.message = calcText(input);
           }
         }
         })
+function calcText(input){
+  var length = input.length;
+  input = input.split("");
+  var jsonop = '{';
+  var prevop = 1;
+  for(i=0;i<length;i++){
+    if(input[i] == '*'){
+      jsonop = printNum(prevop,i,number,jsonop,numel);
+      input[i] = ' <span style="color:red;">x</span> ';
+      jsonop = jsonop+'"el'+i+'":{"op":"mult"},';
+      prevop = 1;
+    }
+    else if(input[i] == '/'){
+      jsonop = printNum(prevop,i,number,jsonop,numel);
+      input[i] = ' <span style="color:red;">/</span> ';
+      jsonop = jsonop+'"el'+i+'":{"op":"div"},';
+      prevop = 1;
+    }
+    else if(input[i] == '-'){
+      jsonop = printNum(prevop,i,number,jsonop,numel);
+      input[i] = ' <span style="color:blue;">-</span> ';
+      jsonop = jsonop+'"el'+i+'":{"op":"rest"},';
+      prevop = 1;
+    }
+    else if(input[i] == '+'){
+      jsonop = printNum(prevop,i,number,jsonop,numel);
+      input[i] = ' <span style="color:blue;">+</span> ';
+      jsonop = jsonop+'"el'+i+'":{"op":"add"},';
+      prevop = 1;
+    }
+    else if(input[i] == '('){
+      jsonop = printNum(prevop,i,number,jsonop,numel);
+      input[i] = ' <span style="color:chocolate;">(</span> ';
+      jsonop = jsonop+'"el'+i+'":{"group":{';
+      prevop = 1;
+    }
+    else if(input[i] == ')'){
+      jsonop = printNum(prevop,i,number,jsonop,numel);
+      input[i] = ' <span style="color:chocolate;">)</span> ';
+      jsonop = jsonop+'},';
+      prevop = 1;
+    }
+    else if(input[i] == ' '){
+      input[i] = '';
+    }
+    else if(input[i] == '='){
+      input[i] = ' <span style="color:gold;">=</span> ';
+      jsonop = jsonop+'"el'+i+'":{"num":'+number+'},';
+      prevop = 1;
+    }else{
+      if(prevop == 1){
+        var number = input[i];
+        var numel = i;
+      }else{
+        number = number+input[i];
+      }
+      prevop = 0;
+    }
+  }
+  jsonop = jsonop+'}';
+  app.op = jsonop;
+  input = input.join('');
+  return input;
+}
 
+function printNum(prevop,i,number,jsonop,numel){
+  if(prevop == 0){
+    jsonop = jsonop+'"el'+numel+'":{"num":'+number+'},';
+  }
+  return jsonop;
+}
   </script>
 </html>
