@@ -23,7 +23,7 @@
         data: {
           message: '',
           input:"",
-          op:{}
+          op:''
         },
         methods:{
           letters: function(){
@@ -38,40 +38,42 @@ function calcText(input){
   var jsonop = '{';
   var prevop = 1;
   for(i=0;i<length;i++){
+
     if(input[i] == '*'){
-      jsonop = printNum(prevop,i,number,jsonop,numel);
+      jsonop = printNum(prevop,number,jsonop,numel);
       input[i] = ' <span style="color:red;">x</span> ';
       jsonop = jsonop+'"el'+i+'":{"op":"mult"},';
       prevop = 1;
     }
     else if(input[i] == '/'){
-      jsonop = printNum(prevop,i,number,jsonop,numel);
+      jsonop = printNum(prevop,number,jsonop,numel);
       input[i] = ' <span style="color:red;">/</span> ';
       jsonop = jsonop+'"el'+i+'":{"op":"div"},';
       prevop = 1;
     }
     else if(input[i] == '-'){
-      jsonop = printNum(prevop,i,number,jsonop,numel);
+      jsonop = printNum(prevop,number,jsonop,numel);
       input[i] = ' <span style="color:blue;">-</span> ';
       jsonop = jsonop+'"el'+i+'":{"op":"rest"},';
       prevop = 1;
     }
     else if(input[i] == '+'){
-      jsonop = printNum(prevop,i,number,jsonop,numel);
+      jsonop = printNum(prevop,number,jsonop,numel);
       input[i] = ' <span style="color:blue;">+</span> ';
       jsonop = jsonop+'"el'+i+'":{"op":"add"},';
       prevop = 1;
     }
     else if(input[i] == '('){
-      jsonop = printNum(prevop,i,number,jsonop,numel);
+      jsonop = printNum(prevop,number,jsonop,numel);
       input[i] = ' <span style="color:chocolate;">(</span> ';
       jsonop = jsonop+'"el'+i+'":{"group":{';
       prevop = 1;
     }
     else if(input[i] == ')'){
-      jsonop = printNum(prevop,i,number,jsonop,numel);
+      jsonop = printNum(prevop,number,jsonop,numel);
       input[i] = ' <span style="color:chocolate;">)</span> ';
-      jsonop = jsonop+'},';
+      jsonop = jsonop.substring(0, jsonop.length - 1);
+      jsonop = jsonop+'}},';
       prevop = 1;
     }
     else if(input[i] == ' '){
@@ -91,13 +93,16 @@ function calcText(input){
       prevop = 0;
     }
   }
+
+  jsonop = jsonop.substring(0, jsonop.length - 1);
   jsonop = jsonop+'}';
+  console.log(JSON.parse(jsonop));
   app.op = jsonop;
   input = input.join('');
   return input;
 }
 
-function printNum(prevop,i,number,jsonop,numel){
+function printNum(prevop,number,jsonop,numel){
   if(prevop == 0){
     jsonop = jsonop+'"el'+numel+'":{"num":'+number+'},';
   }
