@@ -1,18 +1,3 @@
-
-  var app = new Vue({
-        el: '#app',
-        data: {
-          message: '',
-          input:"",
-          op:[]
-        },
-        methods:{
-          letters: function(){
-            var input = this.input;
-             this.message = calcText(input);
-          }
-        }
-        })
 function calcText(input){
   var length = input.length;
   input = input.split("");

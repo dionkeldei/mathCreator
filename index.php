@@ -20,4 +20,20 @@
   </body>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="dMath.js"></script>
+  <script type="text/javascript">
+  var app = new Vue({
+        el: '#app',
+        data: {
+          message: '',
+          input:"",
+          op:[]
+        },
+        methods:{
+          letters: function(){
+            var input = this.input;
+             this.message = calcText(input);
+          }
+        }
+        })
+  </script>
 </html>
