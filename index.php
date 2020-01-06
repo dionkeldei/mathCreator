@@ -7,13 +7,15 @@
   <body>
 <form action="process.php" method="post">
     <div id="app">
-      <p>Texto:</p>
+      <p>Text:</p>
       <p v-html="message"></p>
-      <p v-html="op"></p>
       <input type="hidden" name="json" :value="op">
-      <input v-model="input" v-on:keyup="letters">
+      <label for="">Operation:</label>
+      <input v-model="input" v-on:keyup="letters"><br>
+      <label for="">Value of "x":</label>
+      <input name="var1" value="0">
     </div>
-    <button type="submit" name="button">calcular</button>
+    <button type="submit" name="button">calculate</button>
 </form>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

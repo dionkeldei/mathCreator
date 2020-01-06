@@ -2,7 +2,9 @@
 include "dMathClass.php";
 
 $json = $_POST['json'];
-echo "el resultado es : ".dMath::calc($json);
+$var1 = $_POST['var1'];
+$json = str_replace("x",$var1,$json);
+echo "the return is : ".dMath::calc($json);
 ?>
 
-<a href="index.php"><button type="button" name="button">volvera calcular</button></a>
+<a href="index.php"><button type="button" name="button">Again</button></a>
