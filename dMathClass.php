@@ -50,8 +50,6 @@ class dMath{
             if($lastop == ''){
               $res = $value;
             }elseif($lastop == "add"){
-              echo $res;
-              die();
               $res = $res + $value;
             }elseif($lastop == "rest"){
               $res = $res - $value;
@@ -70,25 +68,7 @@ class dMath{
 
           }
           if($key == "op"){
-            if($value == "add"){
-              $lastop = "add";
-            }
-            if($value == "rest"){
-                $lastop = "rest";
-            }
-            if($value == "div"){
-                $lastop = "div";
-            }
-            if($value == "mult"){
-                $lastop = "mult";
-            }
-            if($value == "sqr"){
-                $lastop = "sqr";
-            }
-            if($value == "pot"){
-                $lastop = "pot";
-            }
-
+              $lastop = $value;
           }
         }
 
