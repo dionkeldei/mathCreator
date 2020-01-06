@@ -46,9 +46,12 @@ class dMath{
       foreach($array as $ar){
         foreach($ar as $key=>$value){
           if($key == "num"){
+
             if($lastop == ''){
               $res = $value;
             }elseif($lastop == "add"){
+              echo $res;
+              die();
               $res = $res + $value;
             }elseif($lastop == "rest"){
               $res = $res - $value;
@@ -56,6 +59,13 @@ class dMath{
               $res = $res / $value;
             }elseif($lastop == "mult"){
               $res = $res * $value;
+            }
+            elseif($lastop == "sqr"){
+              $squ = 1/$value;
+              $res = pow($res,$squ);
+            }
+            elseif($lastop == "pot"){
+              $res = pow($res,$value);
             }
 
           }
@@ -71,6 +81,12 @@ class dMath{
             }
             if($value == "mult"){
                 $lastop = "mult";
+            }
+            if($value == "sqr"){
+                $lastop = "sqr";
+            }
+            if($value == "pot"){
+                $lastop = "pot";
             }
 
           }

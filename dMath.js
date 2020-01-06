@@ -42,6 +42,18 @@ function calcText(input){
       jsonop = jsonop+'}},';
       prevop = 1;
     }
+    else if(input[i] == '^'){
+      jsonop = printNum(prevop,number,jsonop,numel);
+      input[i] = ' <span style="color:chocolate;">^</span> ';
+      jsonop = jsonop+'"el'+i+'":{"op":"pot"},';
+      prevop = 1;
+    }
+    else if(input[i] == '?'){
+      jsonop = printNum(prevop,number,jsonop,numel);
+      input[i] = ' <span style="color:chocolate;">ROOT</span> ';
+      jsonop = jsonop+'"el'+i+'":{"op":"sqr"},';
+      prevop = 1;
+    }
     else if(input[i] == ' '){
       input[i] = '';
     }else{

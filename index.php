@@ -9,6 +9,7 @@
     <div id="app">
       <p>Text:</p>
       <p v-html="message"></p>
+      <p v-html="op"></p>
       <input type="hidden" name="json" :value="op">
       <label for="">Operation:</label>
       <input v-model="input" v-on:keyup="letters"><br>
