@@ -11,6 +11,7 @@ Example:
 Try something like:
 
 Operation: 2+x
+
 Value of "x": 2
 
 The Output will be 4

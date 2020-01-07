@@ -1,4 +1,6 @@
 <?php
+namespace dMath
+
 class dMath{
 
     public static function calc($json){

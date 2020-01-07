@@ -1,5 +1,5 @@
 <?php
-include "dMathClass.php";
+include "src/dMath.php";
 
 $json = $_POST['json'];
 $var1 = $_POST['var1'];

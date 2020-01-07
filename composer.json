@@ -1,0 +1,18 @@
+{
+    "name": "dionkeldei/dmath",
+    "description": "Creates, store and calculate math operations stored in Json format string",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Dionkeldei",
+            "email": "dionkeldei@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "dMath\\": "src"
+        }
+    }
+}
