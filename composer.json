@@ -10,6 +10,7 @@
     ],
     "minimum-stability": "stable",
     "require": {},
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "dMath\\": "src"
