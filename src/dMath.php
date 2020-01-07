@@ -1,5 +1,5 @@
 <?php
-namespace dMath
+namespace dMath;
 
 class dMath{
 
