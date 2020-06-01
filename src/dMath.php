@@ -56,7 +56,12 @@ class dMath{
             }elseif($lastop == "rest"){
               $res = $res - $value;
             }elseif($lastop == "div"){
-              $res = $res / $value;
+              if($value == 0){
+              	$res = 0;
+              }else{
+              	$res = $res / $value;
+              }
+              
             }elseif($lastop == "mult"){
               $res = $res * $value;
             }
