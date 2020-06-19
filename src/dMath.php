@@ -83,6 +83,65 @@ class dMath{
       }
       return $res;
     }
+    
+    public static function decodeJSON($json){
+        if($json == '' || $json == null){
+            return '';
+        }
+        $text = '';
+        $array = json_decode($json,true);
+        foreach($array as $key => $val){ 
+            if(array_key_exists("group",$val)){
+                $text.="(";
+
+                foreach($val['group'] as $k => $v){
+                    if(array_key_exists("group",$v)){
+                    $text.="(";
+                    foreach($v['group'] as $ke => $va){
+                        $text.=dMath::opDecode($va); 
+                    }
+                    $text.=")";
+                    } 
+                   $text.=dMath::opDecode($v);  
+                }
+                $text.=')';
+            }
+            $text.=dMath::opDecode($val); 
+        }
+
+        return $text;
+
+    }
+
+    public static function opDecode($value){
+
+        if(array_key_exists("op",$value)){
+            switch ($value['op']){
+                case 'add':
+                    return '+';
+                    break;
+                case 'rest':
+                    return '-';
+                    break;
+                case 'div':
+                    return '/';
+                    break;
+                case 'mult':
+                    return '*';
+                    break;
+                case 'sqr':
+                    return '?';
+                    break;
+                case 'pot':
+                    return '^';
+                    break;
+
+
+            }
+        }elseif(array_key_exists("num",$value)){
+            return $value['num'];
+        }
+    }
 
 }
  ?>
